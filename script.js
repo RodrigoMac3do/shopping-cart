@@ -83,6 +83,9 @@ function emptyCart() {
 
 btnEmpty.addEventListener('click', emptyCart);
 
+const i = getSavedCartItems();
+ol.innerHTML = i;
+
 window.onload = () => {
   impletaProdutos('computador');
   getSavedCartItems();

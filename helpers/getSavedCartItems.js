@@ -1,6 +1,6 @@
-const itensDoCarrinho = document.querySelector('.cart__items');
+// const itensDoCarrinho = document.querySelector('.cart__items');
 const getSavedCartItems = () => {
-  itensDoCarrinho.innerHTML = localStorage.getItem('cartItems');
+ return itensDoCarrinho = localStorage.getItem('cartItems');
 };
 
 if (typeof module !== 'undefined') {
