@@ -5,6 +5,10 @@ function createProductImageElement(imageSource) {
   return img;
 }
 
+function cartItemClickListener(event) {
+  event.target.remove();
+}
+
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
   e.className = className;
@@ -57,10 +61,6 @@ async function impletaProdutos(a) {
     );
   });
 }
-
-// function cartItemClickListener(event) {
-  
-// }
 
 window.onload = () => {
   impletaProdutos('computador');
