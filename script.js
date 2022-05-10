@@ -1,3 +1,5 @@
+const ol = document.querySelector('.cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -7,6 +9,7 @@ function createProductImageElement(imageSource) {
 
 function cartItemClickListener(event) {
   event.target.remove();
+  saveCartItems(ol.innerHTML);
 }
 
 function createCustomElement(element, className, innerText) {
@@ -31,8 +34,8 @@ async function colocaItemCarrinho(event) {
   const id = getSkuFromProductItem(event.target.parentNode);
   const item = await fetchItem(id);
   const produto = createCartItemElement(item);
-  const ol = document.querySelector('.cart__items');
   ol.appendChild(produto);
+  saveCartItems(ol.innerHTML);
 }
 
 function createProductItemElement({ sku, name, image }) {
@@ -42,8 +45,11 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__sku', sku));
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
-  section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'))
-  .addEventListener('click', colocaItemCarrinho);
+  section
+    .appendChild(
+      createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'),
+    )
+    .addEventListener('click', colocaItemCarrinho);
   return section;
 }
 
@@ -62,6 +68,23 @@ async function impletaProdutos(a) {
   });
 }
 
+function addEscutador() {
+  const aca = document.getElementsByClassName('cart__item');
+  [...aca].forEach((ac) => ac.addEventListener('click', cartItemClickListener));
+}
+
+const btnEmpty = document.getElementsByClassName('empty-cart')[0];
+
+function emptyCart() {
+  const listaLi = document.querySelectorAll('li');
+  listaLi.forEach((li) => li.remove());
+  saveCartItems(ol.innerHTML);
+}
+
+btnEmpty.addEventListener('click', emptyCart);
+
 window.onload = () => {
   impletaProdutos('computador');
+  getSavedCartItems();
+  addEscutador();
 };
