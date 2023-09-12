@@ -1,6 +1,13 @@
+/**
+ * Função fetchItem
+ *
+ * Esta função faz uma requisição à API do Mercado Livre para obter informações sobre um item com base no ID fornecido.
+ *
+ * @param {string} id - O ID do item que você deseja obter informações.
+ * @returns {Promise} Uma Promise que resolve com os dados do item se a requisição for bem-sucedida. Caso contrário, lança um erro com a mensagem "You must provide an url".
+ * @throws {Error} Lança um erro com a mensagem "You must provide an url" se o ID não for fornecido ou se a requisição falhar.
+ */
 const fetchItem = async (id) => {
-  if (!id) return new Error('You must provide an url');
-
   try {
     const res = await fetch(`https://api.mercadolibre.com/items/${id}`);
 
@@ -8,7 +15,7 @@ const fetchItem = async (id) => {
 
     return data;
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error('You must provide an url');
   }
 };
 
