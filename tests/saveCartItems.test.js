@@ -1,15 +1,33 @@
-const localStorageSimulator = require('../mocks/localStorageSimulator');
+// const localStorageSimulator = require('../mocks/localStorageSimulator');
 const saveCartItems = require('../helpers/saveCartItems');
+const getSavedCartItems = require('../helpers/getSavedCartItems');
 
-localStorageSimulator('setItem');
+// localStorageSimulator('setItem');
 
-describe('4 - Teste a função saveCartItems', () => {
-  it('Teste se, ao executar saveCartItems com o argumento <ol><li>Item</li></ol>, o método localStorage.setItem é chamado', () => {
-    saveCartItems('<ol><li>Item</li></ol>')
-    expect(localStorage.setItem).toHaveBeenCalled();
+describe('3 - Teste a função saveCartItems', () => {
+  // Antes de cada teste, limpe o Local Storage para evitar conflitos entre os testes.
+  beforeEach(() => {
+      localStorage.clear();
   });
-  it('Teste se, ao executar saveCartItems com o argumento <ol><li>Item</li></ol>, o método localStorage.setItem é chamado com dois parâmetros, sendo o primeiro "cartItems" e o segundo sendo o valor passado como argumento para saveCartItems', () => {
-    saveCartItems('<ol><li>Item</li></ol>')
-    expect(localStorage.setItem).toHaveBeenCalledWith('cartItems', '<ol><li>Item</li></ol>');
+
+  it('Deve salvar um array vazio no Local Storage quando nenhum item é fornecido', () => {
+    saveCartItems([]);
+
+    const cartItems = getSavedCartItems();
+
+    expect(cartItems).toEqual([]);
+  });
+
+  it('Deve salvar e recuperar itens do carrinho corretamente', () => {
+    const cartItems = [
+      { id: 'MLB12345', title: 'Produto 1', price: 19.99 },
+      { id: 'MLB67890', title: 'Produto 2', price: 29.99 },
+    ];
+
+    saveCartItems(cartItems);
+
+    const cartItemsFromLocalStorage = getSavedCartItems();
+
+     expect(cartItemsFromLocalStorage).toEqual(cartItems);
   });
 });
